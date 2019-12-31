@@ -2,12 +2,10 @@ package com.example.Controller;
 
 import com.example.Entity.Student;
 import com.example.Service.StudentService;
+import com.example.response.GetStudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.*;
-import java.util.Collection;
 
 @RestController
 @RequestMapping("/students")
@@ -17,7 +15,7 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Collection<Student> getAllStudents() {
+    public GetStudentResponse getAllStudents() {
         return studentService.getAllStudents();
     }
 

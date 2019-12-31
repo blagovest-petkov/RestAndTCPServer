@@ -2,10 +2,10 @@ package com.example.Dao;
 
 import com.example.Entity.Student;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface StudentDao {
-    Collection<Student> getAllStudents();
+    List<Student> getAllStudents();
 
     Student getStudentById(int id);
 

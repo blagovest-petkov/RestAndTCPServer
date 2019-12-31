@@ -1,12 +1,11 @@
 package com.example.Service;
 
-import com.example.Dao.FakeStudentDaoImpl;
 import com.example.Dao.StudentDao;
 import com.example.Entity.Student;
+import com.example.response.GetStudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 
 @Service
 public class StudentService {
@@ -14,8 +13,8 @@ public class StudentService {
     @Autowired
     private StudentDao studentDao;
 
-    public Collection<Student> getAllStudents(){
-        return studentDao.getAllStudents();
+    public GetStudentResponse getAllStudents(){
+        return new GetStudentResponse(studentDao.getAllStudents());
     }
 
     public Student getStudentById(int id) {

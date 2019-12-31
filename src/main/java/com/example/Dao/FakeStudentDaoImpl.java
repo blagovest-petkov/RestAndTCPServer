@@ -3,9 +3,7 @@ package com.example.Dao;
 import com.example.Entity.Student;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class FakeStudentDaoImpl implements StudentDao {
@@ -24,8 +22,8 @@ public class FakeStudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public Collection<Student> getAllStudents(){
-        return students.values();
+    public List<Student> getAllStudents(){
+        return new ArrayList<>(students.values());
     }
 
     @Override
