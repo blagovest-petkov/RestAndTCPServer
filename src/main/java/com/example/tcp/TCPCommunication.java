@@ -1,6 +1,6 @@
 package com.example.tcp;
 
-import com.example.utils.Logger;
+import com.example.utils.L;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -16,7 +16,6 @@ public class TCPCommunication {
     private static final String TAG = TCPCommunication.class.getSimpleName();
     private static final int BUFFER_RECEIVE_SIZE = 81920;
     private static final int TCP_MTU_SIZE = 1460;
-    private static final int SO_TIMEOUT = 10000;
 
     //------------------------------------------------------------------------------------------------------------------
     // Fields
@@ -43,6 +42,7 @@ public class TCPCommunication {
     // Override
     //------------------------------------------------------------------------------------------------------------------
     public String receive() {
+        L.log(TAG, "receive");
         if (in == null) {
             return null;
         }
@@ -64,7 +64,7 @@ public class TCPCommunication {
                 return null;
             } else {
                 String xmlRequest = new String(receiveData, 0, allBytesRead);
-                Logger.log(TAG, address, "RECEIVED: " + xmlRequest);
+                L.log(TAG, "RECEIVED: " + xmlRequest);
                 return xmlRequest;
             }
 
@@ -79,7 +79,7 @@ public class TCPCommunication {
             if (out == null) {
                 return;
             }
-            Logger.log(TAG, address, "SEND:" + xmlResponse);
+            L.log(TAG, "SEND:" + xmlResponse);
 
             out.write(xmlResponse.getBytes());
         } catch (IOException e) {
@@ -95,7 +95,7 @@ public class TCPCommunication {
             if (out != null) out.close();
         } catch (Exception e) {
             e.printStackTrace();
-            Logger.log(TAG, address, "TCP close exception: ");
+            L.log(TAG, "TCP close exception: ");
         }
 
     }
@@ -108,10 +108,9 @@ public class TCPCommunication {
     // Private
     //------------------------------------------------------------------------------------------------------------------
     private void initSocket() {
+        L.log(TAG, "initSocket");
         try {
             server = new ServerSocket(port, 10, InetAddress.getByName(address));
-
-            server.setSoTimeout(SO_TIMEOUT);
             socket = server.accept();
 
             out = new DataOutputStream(socket.getOutputStream());

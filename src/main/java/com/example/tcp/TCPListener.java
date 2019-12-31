@@ -1,6 +1,6 @@
 package com.example.tcp;
 
-import com.example.utils.Logger;
+import com.example.utils.L;
 
 public class TCPListener implements Runnable {
     //------------------------------------------------------------------------------------------------------------------
@@ -15,25 +15,21 @@ public class TCPListener implements Runnable {
     private Thread thread;
 
     //------------------------------------------------------------------------------------------------------------------
-    // Instance creation
-    //------------------------------------------------------------------------------------------------------------------
-    public TCPListener() {
-        // TODO: 30.12.19 address and port
-        communication = new TCPCommunication("", 1234);
-        thread = new Thread(this);
-    }
-
-    //------------------------------------------------------------------------------------------------------------------
     // Override
     //------------------------------------------------------------------------------------------------------------------
     @Override
     public void run() {
-        try {
-            Logger.log(TAG, "TCP RECEIVED: " + communication.receive());
 
-        } catch (Exception e) {
-            Logger.log(TAG, communication.getAddress(), communication.getClass().getSimpleName() + " Listening exception ");
-            e.printStackTrace();
+        L.log(TAG, "Runnable started");
+        while (true) {
+            try {
+                communication.receive();
+                //communication.send("One short tcp response!");
+
+            } catch (Exception e) {
+                L.log(TAG, communication.getClass().getSimpleName() + " Listening exception ");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -41,7 +37,7 @@ public class TCPListener implements Runnable {
     // Public
     //------------------------------------------------------------------------------------------------------------------
     public void start() {
-        communication = new TCPCommunication("", 1234);
+        communication = new TCPCommunication("10.10.45.76", 8019);
         thread = new Thread(this);
         thread.start();
     }

@@ -3,6 +3,7 @@ package com.example.Controller;
 import com.example.Entity.Student;
 import com.example.Service.StudentService;
 import com.example.response.GetStudentResponse;
+import com.example.utils.L;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
+    private static final String TAG = StudentController.class.getSimpleName();
 
     @Autowired
     private StudentService studentService;
 
     @RequestMapping(method = RequestMethod.GET)
     public GetStudentResponse getAllStudents() {
+        L.log(TAG, "getAllStudents");
         return studentService.getAllStudents();
     }
 
