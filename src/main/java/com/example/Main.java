@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.tcp.TCPListener;
+import com.example.tcp.TCPServer;
 import com.example.utils.L;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,16 +12,13 @@ public class Main {
     public static void main(String[] args) {
         L.log(TAG, "App started");
         SpringApplication.run(Main.class, args);
-        TCPListener tcpListener = new TCPListener();
-        tcpListener.start();
+        TCPServer tcpServer = new TCPServer(4444);
+        tcpServer.start();
 
         // Stop tcp communication on exit
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                L.log(TAG, "App stopped");
-                tcpListener.stop();
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            L.log(TAG, "App stopped");
+            tcpServer.stop();
+        }));
     }
 }
